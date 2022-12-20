@@ -1,3 +1,9 @@
 Update des trucs à faire mais pour le Jalon 2 :
 
 
+- Voir comment faire pour analyser les fichier txt avec Java
+- Faire des classes Java pour faire l'analyse syntaxique et lexical de notre langage   CF->TP5
+- Voir si on fait en sorte de transformer et mettre à jour les niveaux en .java à partir du .txt fourni par l'user OU si on analyse directement le .txt avec le main pour en faire un niveau en direct ( dans tous les cas il faut faire un analyse à chaque fois qu'on lance un niveau au cas ou l'user change quelque chose dans le niveau donc ça doit pas être static)
+
+
+

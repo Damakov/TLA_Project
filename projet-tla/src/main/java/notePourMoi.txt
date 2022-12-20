@@ -1,3 +1,0 @@
-D'apres ce que j'ai compris il faut faire en sorte de creer un langage pour representer les niveaux dans leur ensemble
-Pour poouvoir faire des des niveaux auto generé potentiellement ?
-A voir avec le prof si possible parce que là c'est flou
