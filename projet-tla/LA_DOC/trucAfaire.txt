@@ -1,0 +1,106 @@
+D'arpes ce que j'ai compris on doit faire un langage qui permet :
+
+D'ecrire un text par exemple et d'en sortir un niveau du jeu, en gros on doit se servir du text pour le transformer en code.
+
+Exemple :
+
+Couloir gauche de 1 a 10 -> Permetrait de faire un couloir entourer de bloque vers la gauche entre x = 1 et x = 10
+
+Boule haut de 2 a 3 -> Permetrait de creer une boule qui tue le jour et qui se deplace de 2 a 3 comme dans l'exemple du niveau 1
+
+
+
+Mais je pense qu'on peut faire ca de pleins de moyens differents donc a voir lequel on choisit 
+
+
+Dans notre langage ce qu'il faut faire :
+
+Initialiser les carreaux
+- Pour les carreaux on peut faire ca avec des couloirs ou autrement de plus simple mais je vois pas comment
+
+Placer les trappes
+- Pour les trappes c'est simple on fait en sorte que la personne ecrive l'endroit ou elle veut placer la trappe et l'endroit ou il faut que la trappe nous conduise
+
+Placer les fantomes
+- Les fantomes se deplacent donc on doit faire en sorte que la personne puisse mettre les deplacements du fantomes mais je sais pas trop comment mettre ça exemple :
+Fantome en 0 11 deplace 3 bas 2 haut/ avec le / pour dire que c'est la fin du mot
+
+Placer les commutateurs
+- Les commutateurs on peut faire des trucs comme les fantomes
+
+
+Exemple du fichier txt :
+
+Couloir ligne 1 gauche 5 / Couloir colonne 5 bas 6 / Trappe de 9 4 a 7 4 / Trappe 19 3 a 9 6 / Fantome de 7 9 deplace 2 droite 
+
+
+
+Couloir :
+Premiere lettre du mot : Couloir
+Ensuite deux choix : ligne ou colonne ( pour dire l'emplacement du couloir)
+Ensuite on met de quelle ligne ou colonne on parle
+Ensuite on met la taille du couloir
+
+
+
+Trappes :
+Premiere lettre du mot : Trappe
+Ensuite on met "de"
+Ensuite la coordonnee x
+Et la y
+Ensuite "a"
+La x
+la y
+
+
+Fantome :
+Premiere lettre du mot : Fantome
+Ensuite "de"
+la x
+la y
+Ensuite "deplace"
+Ensuite un Chiffre
+Et la direction
+(Puis potentillement encore un chiffre et encore une direction si on voit faire des mouvements complex au fantome) 
+
+
+
+AUTRE TEST :
+Exemple :
+
+"
+Couloir :
+- ligne Coordonnee->6,8
+- colonne Coordonnee->8,9
+
+FIN couloir
+
+Trappe:
+- entree (8,9) / sortie (1,2) / Gauche
+// A voir pour les parentheses pas oblige de les mettre mais faut voir comment on gere si on les met pas par exemple on peut dire qu'apres le mot sortie on cherche un chiffre puis une virgule puis un autre chiffre
+// Pour les trappes on doit aussi dire quelle directement le personnage doit prendre pour y acceder
+
+Fantome :
+- Spawn->7,9 Deplacement(gauche=2 , droite=3)
+- Spawn->9,5 Deplacement(haut=6)
+
+FIN fantome
+
+FIN trappe
+
+Commutateur:
+- levier->2,10 porte->6,9
+
+FIN commutateur
+
+// Pour les commutateurs on doit dire ou est ce que se trouve le levier et la porte ( je vois pas trop quoi d'autre de marqué mais je suis pas sur de comprendre comment le code fonctionne)
+
+"
+
+
+
+Dans ce test on peut lister directemnt en mettant un mot cle (fantome, couloir) ca permet a l'utilisateur de pas avoir a reecrire couloir ou fantome a chaque fois
+Les - permettent de differencier les ajouts de chaque type d'objet
+
+
+
