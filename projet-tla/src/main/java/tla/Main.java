@@ -1,5 +1,7 @@
 package tla;
 
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +19,32 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+    	
+    	// ça permet de lister les fichiers contenu dans le ressources level et ensuite on boucle sur ces fichiers là
+    	// le but c'est ensuite d'appliquer le lire fichier text sur tous les fichiers et de verifier que chaque tableau qui en sort est conforme avec l'anlyse lexical et syntaxique
+    	
+    	File dir = new File("src/main/ressources/level");
+    	File[] liste = dir.listFiles();
+    	
+    	int i=0;
+    	for (File item : liste) {
+    		if (item.isFile()) {
+    			
+    			// ici on doit appeller la fonctions lire fichier text
+    			
+    			
+    			// puis les deux analyses 
+    			
+    			
+    			// ensuite on fait en sorte de reproduire l'interface avec le nom de chaque fichier exemple:
+    			
+    			GridPane menuPane = new GridPane();
+    	        Button btnNiveau1 = new Button(item.getName());
+    	        menuPane.add(btnNiveau1, 0, i);
+    			
+    		}
+    		i+=1;
+    	}
 
         // fenêtre principale et panneau de menu
 
