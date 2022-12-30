@@ -38,10 +38,12 @@ public class Main extends Application {
     			
     			// ensuite on fait en sorte de reproduire l'interface avec le nom de chaque fichier exemple:
     			
+    			// si tout est validé on appel la fonction creationNiveau pour faire le niveau lié au tableau creer dans lire fichier text
+    			
     			GridPane menuPane = new GridPane();
     	        Button btnNiveau1 = new Button(item.getName());
     	        menuPane.add(btnNiveau1, 0, i);
-    			
+    			// ça va peut etre etre un probleme avec le nom du button mais à voir plus tard pas le probleme maintenant
     		}
     		i+=1;
     	}
