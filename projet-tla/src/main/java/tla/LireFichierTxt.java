@@ -1,4 +1,4 @@
-package projet_tla;
+package tla;
 
 import java.io.BufferedReader;
 
@@ -8,12 +8,27 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class LireFichierTxt {
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
-	public static void main(String[] args) {
+public class LireFichierTxt {
+	
+	
+	public static ArrayList<ArrayList<String>> lireFichier(String fichier) {
 		
 		
+		System.out.println("----------------------------------------------------------------------");
+		ArrayList<ArrayList<String> > allElements = 
+                new ArrayList<ArrayList<String> >();
+
+		
+		//test
 		String path = "C://Users/marti/Desktop/tla.txt" ;
+		fichier = path;
+		
+		
 		String line = "";
 		 ArrayList<String> Couloirs= new ArrayList<String>();
 		 ArrayList<String> Trappes= new ArrayList<String>();
@@ -24,7 +39,7 @@ public class LireFichierTxt {
 		 
 		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(path));
+			BufferedReader br = new BufferedReader(new FileReader(fichier));
 			
 			while((line = br.readLine()) != null) {		
 				
@@ -63,10 +78,6 @@ public class LireFichierTxt {
 					
 				}
 			}
-			 System.out.println("\nCOULOIRS : " + Couloirs);
-			 System.out.println("\nTRAPPES : " + Trappes);
-			 System.out.println("\nFANTOMES : " + Fantomes);
-			 System.out.println("\nCOMMUTATEURS : " + Commutateurs);
 			 
 			 // PERMET DE LIRE TOUS LES ELEMENTS SEPAREMENT
 //			 for (int i = 0; i < Couloirs.size(); i++) {
@@ -100,6 +111,32 @@ public class LireFichierTxt {
 		 catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		allElements.add(Couloirs);
+		allElements.add(Trappes);
+		allElements.add(Fantomes);
+		allElements.add(Commutateurs);
+//		allElements[0] = Couloirs ;
+//		allElements[1] = Trappes ;
+//		allElements[2] = Fantomes ;
+//		allElements[3] = Commutateurs ;
+		System.out.println("SALUT" + allElements);
+		System.out.println("SALUT FDP0" + allElements.get(0));
+		System.out.println("SALUT FDP1" + allElements.get(1));
+		System.out.println("SALUT FDP2" + allElements.get(2));
+		System.out.println("SALUT FDP3" + allElements.get(3));
+		
+		return allElements;		
+}
+
+
+	public static void main(String[] args) {
+		
+		String path = "C://Users/marti/Desktop/tla.txt" ;
+		lireFichier(path);
+		// Afficher tout l'arraylist, chaque éléments est en [0],[1],[2],[3]
+ 		//System.out.println(lireFichier(path));
+		
 	}	
 
 }
