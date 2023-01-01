@@ -1,0 +1,37 @@
+
+
+
+On a divisé le processus en plusieurs partie :
+
+
+Premier :
+On liste les fichiers qui se trouve dans le repertoire prevu pour les fichiers txt de niveau coder pa l'user (dans le main au niveau du start)
+Ensuite pour chaque fichier trouvé on applique les processus suivants.
+
+
+Deuxieme :
+ON appel la classe LireFichierTxt qui transforme le etxt de l'user en ArrayList d'ArrayList contenant les informations sur tous les objets necessaire à la création du niveau ;
+- Les couloirs 
+- Les trappes 
+- Les fantomes
+- Les Commutateurs 
+
+Ce qui nous permet d'appliquer le processus suivant.
+
+Troisieme :
+On se sert des classes AnalyseSyntaxique et AnaliseLexical qui renvoit chacune un vrai si le fichier ne provoque pas d'erreur (donc le niveau est potentiellement valide) et une erreure si il ne l'est pas.
+Ça nous permet de faire le processus final qui est le création du niveau.
+
+
+Quatrieme :
+On appel la classe création niveau en passant en parametre l'arrayList sorti par la classe LireFichierText et le nom du fichier (pour donné un nom au niveau)
+
+Dans cette classe on decortique l'Arraylist pour la transformer en un niveau viable (en .java) ;
+
+Pour les couloirs on fait
+
+Pour les trappes on fait en sorte de recuperer les coordonnées de l'arraylist et on écrit sur le fichier Java les trappes que l'user a voulu ajouter
+
+Pour les fantomes on fait la meme chose en ajoutant leur deplacements.
+
+Et les commutateurs pareil.

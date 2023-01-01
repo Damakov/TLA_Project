@@ -40,6 +40,8 @@ public class Main extends Application {
     			
 
     			// si tout est validé on appel la fonction creationNiveau pour faire le niveau lié au tableau creer dans lire fichier text
+    			
+    			
     			GridPane menuPane = new GridPane();
     	        Button btnNiveau1 = new Button(item.getName());
     	        menuPane.add(btnNiveau1, 0, i);
