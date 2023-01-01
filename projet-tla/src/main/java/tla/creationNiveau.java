@@ -69,8 +69,40 @@ public class creationNiveau {
 			// Avec la deuxieme partie on a les deplacements, mais il faut les separer
 			String deplacement = words[1];
 			
-			// Il faut trouver un moyen savoir si c'est gauche droite etc
+			String[] deplacementsList = deplacement.split(";");
+			String depsfantome; 
+			
+			// Pour le deplacement on regarde découpe chaque partie avec ;
+			// Puis on regarde la premiere lettre de chaque partie pour savoir le mouvement
+			// Et on boucle sur le chiffre pour l'ajouter le nombre de fois necessaire
+			for (String dep : deplacementsList) {
+				if (dep.matches("g.*")) {
+					int i = Integer.parseInt(dep);
+					for (int j=0 ; j<i; j++ ) {
+						bw.write("GAUCHE, \n");
+					}
 
+				};
+				if (dep.matches("d.*")) {
+					int i = Integer.parseInt(dep);
+					for (int j=0 ; j<i; j++ ) {
+						bw.write("DROITE, \n");
+					}
+				};
+				if (dep.matches("h.*")) {
+					int i = Integer.parseInt(dep);
+					for (int j=0 ; j<i; j++ ) {
+						bw.write("HAUT, \n");
+					}
+				};
+				if (dep.matches("b.*")) {
+					int i = Integer.parseInt(dep);
+					for (int j=0 ; j<i; j++ ) {
+						bw.write("BAS, \n");
+					}
+				};
+				
+			}
 			
 			
 		}
