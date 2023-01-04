@@ -11,7 +11,12 @@ public class creationNiveau {
 
 	public static void creerNiveau(ArrayList<ArrayList<String>> list, String nom) throws IOException {
 		File file = new File("./"+nom+".java");
-		file.createNewFile();
+		// On créé un file avec le bon nom et l'extension Java si il n'existe pas et si il existe on le delete et le créé après
+		if (file.createNewFile()==false) {
+			file.delete();
+			file.createNewFile();
+		}
+		else file.createNewFile();
 		PrintWriter writer = new PrintWriter(file);
 		 BufferedWriter bw = new BufferedWriter(writer);
 		 bw.write("package tla;\n"
@@ -24,6 +29,17 @@ public class creationNiveau {
 		 		+ "\n"
 		 		+ "    "+nom+"() {\n"
 		 		+ "        INIT_CARREAUX =\n");
+		 
+		 
+		 
+		 // Il faut créé un moyen de generer les couloirs de maniere opti
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 		 
 		 bw.write("TRAPPES = Arrays.asList(\n");
 		 
@@ -70,7 +86,6 @@ public class creationNiveau {
 			String deplacement = words[1];
 			
 			String[] deplacementsList = deplacement.split(";");
-			String depsfantome; 
 			
 			// Pour le deplacement on regarde découpe chaque partie avec ;
 			// Puis on regarde la premiere lettre de chaque partie pour savoir le mouvement
@@ -139,6 +154,11 @@ public class creationNiveau {
 		
 		
 		
+		
+		
+		
+		
+		bw.close();
 		
 		
 	}

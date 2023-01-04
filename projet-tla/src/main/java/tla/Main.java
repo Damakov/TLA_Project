@@ -1,7 +1,6 @@
 package tla;
 
 import java.io.File;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,6 +25,20 @@ public class Main extends Application {
     	File dir = new File("src/main/ressources/level");
     	File[] liste = dir.listFiles();
     	
+		GridPane menuPane = new GridPane();
+		
+
+        Scene scene = new Scene(menuPane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        // panneau racine du jeu
+
+        BorderPane borderPane = new BorderPane();
+
+        Plateau plateau = new Plateau(borderPane);
+        
+    	
     	int i=0;
     	for (File item : liste) {
     		if (item.isFile()) {
@@ -40,19 +53,23 @@ public class Main extends Application {
     			
 
     			// si tout est validé on appel la fonction creationNiveau pour faire le niveau lié au tableau creer dans lire fichier text
-    			
-    			
-    			GridPane menuPane = new GridPane();
-    	        Button btnNiveau1 = new Button(item.getName());
+    	        
+    			Button btnNiveau1 = new Button(item.getName());
     	        menuPane.add(btnNiveau1, 0, i);
     			// ça va peut etre etre un probleme avec le nom du button mais à voir plus tard pas le probleme maintenant
+    	        
+    	        btnNiveau1.setOnAction(event -> {
+    	            scene.setRoot(borderPane);
+    	            plateau.setNiveau(new Niveau1());
+    	            plateau.start();
+    	            primaryStage.sizeToScene();
+    	        });
     		}
     		i+=1;
     	}
 
         // fenêtre principale et panneau de menu
 
-        GridPane menuPane = new GridPane();
         Button btnNiveau1 = new Button("niveau 1");
         menuPane.add(btnNiveau1, 0, 1);
         Button btnNiveau2 = new Button("niveau 2");
@@ -62,15 +79,6 @@ public class Main extends Application {
         ImageView imageView = new ImageView(LibrairieImages.imgJoueurGrand);
         menuPane.add(imageView, 1, 0, 1, 5);
 
-        Scene scene = new Scene(menuPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        // panneau racine du jeu
-
-        BorderPane borderPane = new BorderPane();
-
-        Plateau plateau = new Plateau(borderPane);
 
         btnNiveau1.setOnAction(event -> {
             // affiche le panneau racine du jeu (à la place du panneau de menu)
