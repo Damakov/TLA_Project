@@ -24,136 +24,681 @@ public class AnalyseSyntaxique {
 		return res;
 	}
 
-	/*
 
-	Traite la dérivation du symbole non-terminal S
-
-	S -> A S'
-
-	 */
 
 	private Integer S() throws UnexpectedTokenException {
 
-		if (getTypeDeToken() == TypeDeToken.intVal /*||
-				getTypeDeToken() == TypeDeToken.leftPar*/) {
-
-			// production S -> A S'
-
-			niveauIndentation++;
-			Integer a = A();
-			niveauIndentation--;
-			return S_prime(a);
+		if (getTypeDeToken() == TypeDeToken.Fin) {
+			
+			return 0;
 		}
-		throw new UnexpectedTokenException("intVal ou ( attendu");
-	}
-
-	/*
-
-	Traite la dérivation du symbole non-terminal S'
-
-	S' -> + S | epsilon
-
-	 */
-
-	private Integer S_prime(Integer i) throws UnexpectedTokenException {
-
-		if (getTypeDeToken() == TypeDeToken.intVal/*add*/) {
-
-			// production S' -> + S
-
-			Token t = lireToken();
-			printToken("+");
-			niveauIndentation++;
-			Integer s = S();
-			niveauIndentation--;
-			return i + s;
-		}
-
-		if (getTypeDeToken() == TypeDeToken.parfermante/*rightPar*/ ||
-				finAtteinte()) {
-
-			// production S' -> epsilon
-
-			return i;
-		}
-
-		throw new UnexpectedTokenException("+ ou ) attendu");
-	}
-
-	/*
-
-	Traite la dérivation du symbole non-terminal A
-
-	A -> ( S ) A' | intVal A'
-
-	 */
-
-	private Integer A() throws UnexpectedTokenException {
-
-		if (getTypeDeToken() == TypeDeToken.parouvrante/*leftPar*/) {
-
-			// production A -> ( S ) A'
-
-			lireToken();
-			niveauIndentation++;
-			Integer s = S();
-			niveauIndentation--;
-
-			if (getTypeDeToken() == TypeDeToken.parfermante/*rightPar*/) {
-				lireToken();
-				return A_prime(s);
-			}
-			throw new UnexpectedTokenException(") attendu");
-		}
-
-		if (getTypeDeToken() == TypeDeToken.intVal) {
-
-			// production A -> intVal A'
-
+		if (getTypeDeToken() == TypeDeToken.Couloir){ 
 			Token t = lireToken();
 			niveauIndentation++;
 			printToken(t.getValeur());
 			niveauIndentation--;
 			Integer i = Integer.valueOf(t.getValeur());
-			return A_prime(i);
-		}
+			return C0(i);
+			} 
+		if (getTypeDeToken() == TypeDeToken.Trappe){
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer i = Integer.valueOf(t.getValeur());
+			return T0(i);
+				} 
+		if (getTypeDeToken() == TypeDeToken.Fantome){
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer i = Integer.valueOf(t.getValeur());
+			return F0(i);
+				}
+		if (getTypeDeToken() == TypeDeToken.Commutateur) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer i = Integer.valueOf(t.getValeur());
+			return K0(i); 
 
+		}
 		throw new UnexpectedTokenException("intVal ou ( attendu");
 	}
 
-	/*
+// -------------------------Couloir-----------------------------------
+	private Integer C0(Integer i) throws UnexpectedTokenException {
 
-	Traite la dérivation du symbole non-terminal A'
+		if (getTypeDeToken() == TypeDeToken.ident) {
+			Token t = lireToken();
+			printToken("\n");
+			niveauIndentation++;
+			Integer c = C1(i);
+			niveauIndentation--;
+			return c;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C1(Integer i) throws UnexpectedTokenException {
 
-	A' -> * A | epsilon
+		if (getTypeDeToken() == TypeDeToken.end||
+				getTypeDeToken() == TypeDeToken.ligne ||
+				getTypeDeToken() == TypeDeToken.colonne) {
 
-	 */
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C2(Integer i) throws UnexpectedTokenException {
 
-	private Integer A_prime(Integer i) throws UnexpectedTokenException {
-		if (getTypeDeToken() == TypeDeToken.intVal/*multiply*/) {
-
-			// production A' -> * A
+		if (getTypeDeToken() == TypeDeToken.comma) {
 
 			Token t = lireToken();
-			printToken("*");
+			printToken(",");
 			niveauIndentation++;
-			Integer a = A();
+			Integer c = C3(i);
 			niveauIndentation--;
-			return i * a;
+			return c;
+
+
 		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C3(Integer i) throws UnexpectedTokenException {
 
-		if (getTypeDeToken() == TypeDeToken.intVal/*add*/ ||
-				getTypeDeToken() == TypeDeToken.intVal/*rightPar*/ ||
-				finAtteinte()) {
-
-			// production A' -> epsilon
-
-			return i;
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+			
 		}
-		throw new UnexpectedTokenException("*, +, ) ou fin d'entrée attendu");
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C4(Integer i) throws UnexpectedTokenException {
 
+		if (getTypeDeToken() == TypeDeToken.comma) {
+			Token t = lireToken();
+			printToken(",");
+			niveauIndentation++;
+			Integer c = C5(i);
+			niveauIndentation--;
+			return c;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C5(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.leftPar) {
+			Token t = lireToken();
+			niveauIndentation++;
+			Integer c = C6(i);
+			niveauIndentation--;
+			return c;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C6(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C7(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.semiColon) {
+			Token t = lireToken();
+			printToken(";");
+			niveauIndentation++;
+			Integer c = C8(i);
+			niveauIndentation--;
+			return c;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C8(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer C9(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.rightPar) {
+			Token t = lireToken();
+			printToken(")");
+			niveauIndentation++;
+			Integer c = C0(i);
+			niveauIndentation--;
+			return c;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
 	}
 
+	// -------------------------Trappe-----------------------------------	
+	private Integer T0(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.ident) {
+			Token t = lireToken();
+			printToken("/n");
+			niveauIndentation++;
+			Integer T = T1(i);
+			niveauIndentation--;
+			return T;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T1(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.entre) {
+   
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T2(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.leftPar) {
+			Token t = lireToken();
+			niveauIndentation++;
+			Integer T = T2(i);
+			niveauIndentation--;
+			return T;
+			
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	private Integer T3(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T4(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.semiColon) {
+			Token t = lireToken();
+			printToken(";");
+			niveauIndentation++;
+			Integer T = T5(i);
+			niveauIndentation--;
+			return T;
+         
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T5(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T6(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.rightPar) {
+			Token t = lireToken();
+			printToken(")");
+			niveauIndentation++;
+			Integer T = T7(i);
+			niveauIndentation--;
+			return T;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T7(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.sortie) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T8(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.leftPar) {
+			Token t = lireToken();
+			
+			niveauIndentation++;
+			Integer T = T9(i);
+			niveauIndentation--;
+			return T;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T9(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T10(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.semiColon) {
+			Token t = lireToken();
+			printToken(";");
+			niveauIndentation++;
+			Integer T = T9(i);
+			niveauIndentation--;
+			return T;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T11(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer T12(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.rightPar) {
+			Token t = lireToken();
+			printToken(")");
+			niveauIndentation++;
+			Integer T = T0(i);
+			niveauIndentation--;
+			return T;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	// -------------------------Fantome-----------------------------------	
+	
+	private Integer F0(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.ident) {
+			Token t = lireToken();
+			printToken("/n");
+			niveauIndentation++;
+			Integer F = F1(1);
+			niveauIndentation--;
+			return F;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F1(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.end || getTypeDeToken() == TypeDeToken.spawn) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F2(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.leftPar) {
+			Token t = lireToken();
+			
+			niveauIndentation++;
+			Integer F = F3(i);
+			niveauIndentation--;
+			return F;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F3(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F4(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.semiColon) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F5(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F6(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.rightPar) {
+			Token t = lireToken();
+			printToken(")");
+			niveauIndentation++;
+			Integer F = F7(i);
+			niveauIndentation--;
+			return F;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F7(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.comma) {
+			Token t = lireToken();
+			printToken(",");
+			niveauIndentation++;
+			Integer F = F8(i);
+			niveauIndentation--;
+			return F;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F8(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.deplacement) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F9(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.leftPar) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F10(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.gauche || getTypeDeToken() == TypeDeToken.droite || getTypeDeToken() == TypeDeToken.haut || getTypeDeToken() == TypeDeToken.bas) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F11(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.equal) {
+			Token t = lireToken();
+			printToken("=");
+			niveauIndentation++;
+			Integer F = F3(i);
+			niveauIndentation--;
+			return F;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F12(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer F13(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.semiColon) {
+			Token t = lireToken();
+			printToken(";");
+			niveauIndentation++;
+			Integer F = F10(i);
+			niveauIndentation--;
+			return F;
+
+		}
+		
+		if (getTypeDeToken() == TypeDeToken.rightPar) {
+			Token t = lireToken();
+			printToken(")");
+			niveauIndentation++;
+			Integer F = F0(i);
+			niveauIndentation--;
+			return F;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+// -------------------------K-----------------------------------
+	private Integer K0(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.ident) {
+			Token t = lireToken();
+			printToken("/n");
+			niveauIndentation++;
+			Integer k = K0(i);
+			niveauIndentation--;
+			return k;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K1(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.end) {
+            
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K2(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.leftPar) {
+			Token t = lireToken();
+			niveauIndentation++;
+			Integer k = K3(i);
+			niveauIndentation--;
+			return k;
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K3(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K4(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.semiColon) {
+			Token t = lireToken();
+			printToken(";");
+			niveauIndentation++;
+			Integer k = K5(i);
+			niveauIndentation--;
+			return k;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K5(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K6(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.rightPar) {
+
+ 
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K7(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.porte) {
+			Token t = lireToken();
+			niveauIndentation++;
+			Integer k = K7(i);
+			niveauIndentation--;
+			return k;
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K8(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.leftPar) {
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K9(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K10(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.semiColon) {
+			Token t = lireToken();
+			printToken(";");
+			niveauIndentation++;
+			Integer k = K11(i);
+			niveauIndentation--;
+			return k;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K11(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.intVal) {
+			Token t = lireToken();
+			niveauIndentation++;
+			printToken(t.getValeur());
+			niveauIndentation--;
+			Integer j = Integer.valueOf(t.getValeur());
+
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
+	private Integer K12(Integer i) throws UnexpectedTokenException {
+
+		if (getTypeDeToken() == TypeDeToken.rightPar) {
+			Token t = lireToken();
+			printToken(")");
+			niveauIndentation++;
+			Integer k = K0(i);
+			niveauIndentation--;
+			return k;
+
+		}
+		throw new UnexpectedTokenException("intVal ou ( attendu");
+	}
+	
 	/*
 
 	méthodes utilitaires
