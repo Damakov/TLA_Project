@@ -38,7 +38,6 @@ public class AnalyseLexicale {
 		pos = 0;
 
 		List<Token> tokens = new ArrayList<>();
-
 		/* copie des symboles en entrée
 		- permet de distinguer les mots-clés des identifiants
 		- permet de conserver une copie des valeurs particulières des tokens de type ident et intval
@@ -98,6 +97,10 @@ public class AnalyseLexicale {
 						tokens.add(new Token(TypeDeToken.Couloir));
 						retourArriere();
 						break;
+					case "c":
+						tokens.add(new Token(TypeDeToken.Couloir));
+						retourArriere();
+						break;
 					case "Trappe":
 						tokens.add(new Token(TypeDeToken.Trappe));
 						retourArriere();
@@ -111,6 +114,10 @@ public class AnalyseLexicale {
 						retourArriere();
 						break;
 					case "trappes":
+						tokens.add(new Token(TypeDeToken.Trappe));
+						retourArriere();
+						break;
+					case "t":
 						tokens.add(new Token(TypeDeToken.Trappe));
 						retourArriere();
 						break;
@@ -143,6 +150,10 @@ public class AnalyseLexicale {
 						retourArriere();
 						break;
 					case "fantôme":
+						tokens.add(new Token(TypeDeToken.Fantome));
+						retourArriere();
+						break;
+					case "f":
 						tokens.add(new Token(TypeDeToken.Fantome));
 						retourArriere();
 						break;
@@ -254,7 +265,15 @@ public class AnalyseLexicale {
 						tokens.add(new Token(TypeDeToken.gauche));
 						retourArriere();
 						break;
+					case "g":
+						tokens.add(new Token(TypeDeToken.gauche));
+						retourArriere();
+						break;
 					case "droite":
+						tokens.add(new Token(TypeDeToken.droite));
+						retourArriere();
+						break;
+					case "d":
 						tokens.add(new Token(TypeDeToken.droite));
 						retourArriere();
 						break;
@@ -271,6 +290,10 @@ public class AnalyseLexicale {
 						retourArriere();
 						break;
 					case "bas":
+						tokens.add(new Token(TypeDeToken.bas));
+						retourArriere();
+						break;
+					case "b":
 						tokens.add(new Token(TypeDeToken.bas));
 						retourArriere();
 						break;

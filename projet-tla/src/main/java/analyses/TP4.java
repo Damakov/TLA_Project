@@ -9,8 +9,8 @@ public class TP4 {
 		// testAnalyseSyntaxique("3*(10+1)");
 		//testAnalyseSyntaxique("3+2*(1+2)");
 		// testAnalyseSyntaxique("3 * 3 + 7 * 7 + 4");
-		testAnalyseLexicale("Couloir ligne,3,(6;8) colonne,5,(8;9)end");
-		//testAnalyseSyntaxique("Couloir ligne,3,(6;8) colonne,5,(8;9)end");
+		//testAnalyseLexicale("Couloir ligne,3,(6;8) colonne,5,(8;9) end Fin");
+		testAnalyseSyntaxique("Commutateur levier(2;10) porte(6;9) end Fin");
 
 	}
 
@@ -38,7 +38,7 @@ public class TP4 {
 		System.out.println("test analyse syntaxique");
 		try {
 			List<Token> tokens = new AnalyseLexicale().analyse(entree);
-			Integer res = new AnalyseSyntaxique().analyse(tokens);
+			String res = new AnalyseSyntaxique().analyse(tokens);
 			System.out.println("La valeur de l'expression " + entree + " est " + res);
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
