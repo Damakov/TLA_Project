@@ -96,6 +96,9 @@ class Plateau {
                 case '#':
                     carreaux[i].setEtat(EtatCarreau.MUR);
                     break;
+                    
+                //case  '\n' : i--;
+                
                 case '*':
                     carreaux[i].setEtat(EtatCarreau.SORTIE);
             }

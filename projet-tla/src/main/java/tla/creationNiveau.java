@@ -8,6 +8,52 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class creationNiveau {
+	
+	          
+	
+	static String NouvelleMap(String str, int positionLigne, int enleverHashDebut, int enleverHashFin )
+	{
+			
+		String returnMap = "";
+		String[] mapLigne = str.split("\n");
+		int compteur = 0;
+        for (String mapXligneFinale : mapLigne) {
+            compteur ++;
+            if(compteur == positionLigne) {
+            	mapXligneFinale = changerLigne(mapXligneFinale,enleverHashDebut,enleverHashFin);
+            }
+            //System.out.println(mapXligneFinale);
+            returnMap += mapXligneFinale + "\n";
+        }
+        System.out.println("Nombre de lignes : " + compteur);
+        //System.out.println("CE QUE LA FONCTION RETOURNE :");
+
+		
+	   return returnMap;
+	}
+	 public static String changerLigne(String str, int debut, int fin) {  
+		 
+		// Permet de remplacer # avec un ' ' de tel (debut) à tel endroit (fin)
+		StringBuilder strBuilder = new StringBuilder(str);
+		 for (int i = debut; i < fin; i++) {
+			 if (
+			 strBuilder.charAt(i) == '*') {
+				 
+			 }
+			 else {
+				 strBuilder.setCharAt(i, ' ');
+			 }
+		 }
+		 String nouvelleLigne = strBuilder.toString();
+         return nouvelleLigne;  
+      }  
+	
+
+	
+	
+	
+	
+	
 
 	public static void creerNiveau(ArrayList<ArrayList<String>> list, String nom) throws IOException {
 		File file = new File("./"+nom+".java");
@@ -30,10 +76,48 @@ public class creationNiveau {
 		 		+ "    "+nom+"() {\n"
 		 		+ "        INIT_CARREAUX =\n");
 		 
+		 String map = "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "####################\n" +
+				 "###################*\n" ;
 		 
+		 	int positionLigne;
+			int enleverHashDebut;
+			int enleverHashFin;
 		 
-		 // Il faut créé un moyen de generer les couloirs de maniere opti
-		 
+		 		 for (String item : list.get(0)) {
+		 			 
+		 			 String[] couloirs = item.split("/");
+		 			 String[] coord = couloirs[2].split(";");
+		 			 
+		 			 if (couloirs[0].matches("c.*")) {
+
+		 			 }
+		 			 else {
+		 				 positionLigne = Integer.parseInt(couloirs[1]);
+		 				enleverHashDebut = Integer.parseInt(coord[0]);
+		 				enleverHashFin = Integer.parseInt(coord[1]);
+
+		 				map = NouvelleMap(map, positionLigne, enleverHashDebut, enleverHashFin);
+
+		 			 }
+		 			 
+		 		 }
+		 		 
+				 bw.write(map+";\n");
+
+		 		 
+		 		 
 		 
 		 
 		 
@@ -85,7 +169,8 @@ public class creationNiveau {
 			// Avec la deuxieme partie on a les deplacements, mais il faut les separer
 			String deplacement = words[1];
 			
-			String[] deplacementsList = deplacement.split(";");
+			String[] deponly = words[1].split("(");
+			String[] deplacementsList = deponly[1].split(";");
 			
 			// Pour le deplacement on regarde découpe chaque partie avec ;
 			// Puis on regarde la premiere lettre de chaque partie pour savoir le mouvement
