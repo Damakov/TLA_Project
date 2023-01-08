@@ -5,12 +5,12 @@ import java.util.List;
 public class TP4 {
 
 	public static void main(String[] args) {
-
-		// testAnalyseSyntaxique("3*(10+1)");
-		//testAnalyseSyntaxique("3+2*(1+2)");
-		// testAnalyseSyntaxique("3 * 3 + 7 * 7 + 4");
-		//testAnalyseLexicale("Couloir ligne,3,(6;8) colonne,5,(8;9) end Fin");
-		testAnalyseSyntaxique("Commutateur levier(2;10) porte(6;9) end Fin");
+			LireFichierTxt a = new LireFichierTxt();
+			String path = "C://Users/Sewraj/Documents/tlaTest.txt" ;
+			ArrayList<ArrayList<String>> arr = a.lireFichier(path);
+			String entree = concatToString(arr);
+			System.out.println(entree);
+			
 
 	}
 
