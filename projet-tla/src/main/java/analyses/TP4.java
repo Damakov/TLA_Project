@@ -18,6 +18,17 @@ public class TP4 {
 	effectue l'analyse lexicale de la chaine entree,
 	affiche la liste des tokens reconnus
 	 */
+	public static String concatToString(ArrayList<ArrayList<String>> allElements) {
+		ArrayList<String> concat = new ArrayList<String>();
+		concat.addAll(allElements.get(0));
+		concat.addAll(allElements.get(1));
+		concat.addAll(allElements.get(2));
+		concat.addAll(allElements.get(3));
+		
+		return concat.toString();
+	      }
+	
+	
 	private static void testAnalyseLexicale(String entree) {
 		System.out.println("test analyse lexicale"); 
 		try {
