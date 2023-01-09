@@ -10,7 +10,7 @@ Ce qu'on a validé :
 pouvoir écrire automatiquement un fichier java permettant ainsi de faire fonctionner le niveau.
 - Main qui permet de relier tout ceci et faire fonctionner le fichier java en faisant appel aux fichiers du jeu de Mr Bourreau.
 
--> N'importe quel niveau peut maintenant être créé.
+-> N'importe quel niveau peut maintenant être créé via notre langage.
 
 
 
