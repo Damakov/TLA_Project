@@ -9,12 +9,12 @@ public class AnalyseLexicale {
 	Table de transition de l'analyse lexicale
 	 */
 	private static Integer TRANSITIONS[][] = {
-			//           espace   ,    (    )    ;    =  chiffre  lettre
+			//           espace   /    (    )    ;    =  chiffre  lettre
 			/*  0 */    {	  0, 101, 102, 103, 104, 105,    1,    2},
 			/*  1 */    {	106, 106, 106, 106, 106, null,    1, null}, //Si c'est un chiffre
 			/*  2 */    {	107, 107, 107, null, null, 107, null,    2} //Si c'est une lettre
 
-			// 101 acceptation d'un ,
+			// 101 acceptation d'un /
 			// 102 acceptation d'un (
 			// 103 acceptation d'un )
 			// 104 acceptation d'un ;
@@ -57,7 +57,7 @@ public class AnalyseLexicale {
 			// cas particulier lorsqu'un état d'acceptation est atteint
 			if (e >= 100) {
 				if (e == 101) {
-					tokens.add(new Token(TypeDeToken.comma));
+					tokens.add(new Token(TypeDeToken.slash));
 				} else if (e == 102) {
 					tokens.add(new Token(TypeDeToken.leftPar));
 				} else if (e == 103) {
@@ -377,7 +377,7 @@ public class AnalyseLexicale {
 	private static int indiceSymbole(Character c) throws IllegalCharacterException {
 		if (c == null) return 0;
 		if (Character.isWhitespace(c)) return 0;
-		if (c == ',') return 1;
+		if (c == '/') return 1;
 		if (c == '(') return 2;
 		if (c == ')') return 3;
 		if (c == ';') return 4;
