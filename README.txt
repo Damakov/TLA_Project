@@ -10,9 +10,9 @@ Antoine Coestesquis
 
 
 
-Pour la création de nouveaux niveaux, on doit stocker le fichier text dans le dossier de ressources où se trouve les images du jeu.
-Afin de creer le niveau notre code va lister les fichiers text presents dans ressource et faire en sorte d'appliquer les analyses sur chacun des fichiers.
-Si analyses positives, alors on va ensuite appliquer la fonction créationNiveau qui permet de transformer le fichier text en class Java afin de paramétrer un niveau en Java qui va fonctionner comme les ancien niveaux.
+Pour la création de nouveaux niveaux, on doit stocker le fichier texte dans le dossier de ressources où se trouve les images du jeu.
+Afin de creer le niveau notre code va lister les fichiers textes présents dans ressources et faire en sorte d'appliquer les analyses sur chacun des fichiers.
+Si analyses positives, alors on va ensuite appliquer la fonction créationNiveau qui permet de transformer le fichier texte en class Java afin de paramétrer un niveau en Java qui va fonctionner comme les anciens niveaux.
 
 Ce qu'on a validé :
 
@@ -35,3 +35,7 @@ Ce que nous n'avons pas fini :
 Par exemple, on a remplacé les "," par des "/" car pour l'exemple : [levier(5;14)/porte(1;3), levier(11;6)/porte(10;13)]
 c'est plus simple pour split avec des "/" chaque élément et les arrayLists séparent automatiquement par des "," entre chaque.
 Mais de ce fait il fallait revenir sur la table syntaxique et les analyses.
+
+
+Travail dérivé d'un projet de Maxime Bourreau, réalisé dans le cadre d'un module de théorie des langages, à l'université de Tours. Les fichiers
+d'images proviennent du site www.kenney.nl.
