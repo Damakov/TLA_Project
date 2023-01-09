@@ -23,10 +23,7 @@ public class LireFichierTxt {
 		ArrayList<ArrayList<String> > allElements = 
                 new ArrayList<ArrayList<String> >();
 
-		
-		//test
-		String path = "C://Users/marti/Desktop/tla.txt" ;
-		fichier = path;
+
 		
 		
 		String line = "";
