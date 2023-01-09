@@ -4,13 +4,8 @@ import java.io.BufferedReader;
 
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 public class LireFichierTxt {
@@ -19,88 +14,33 @@ public class LireFichierTxt {
 	public static ArrayList<ArrayList<String>> lireFichier(String fichier) {
 		
 		
-		System.out.println("----------------------------------------------------------------------");
-		ArrayList<ArrayList<String> > allElements = 
-                new ArrayList<ArrayList<String> >();
-
-
-		
-		
-		String line = "";
-		 ArrayList<String> Couloirs= new ArrayList<String>();
-		 ArrayList<String> Trappes= new ArrayList<String>();
-		 ArrayList<String> Fantomes= new ArrayList<String>();
-		 ArrayList<String> Commutateurs= new ArrayList<String>();
-		 // ArrayList<String> X= new ArrayList<String>();
-		 // String[][] X = null;
+		ArrayList<ArrayList<String>> allElements = new ArrayList<ArrayList<String>>();
+		ArrayList<String> Couloirs= new ArrayList<String>();
+		ArrayList<String> Trappes= new ArrayList<String>();
+		ArrayList<String> Fantomes= new ArrayList<String>();
+		ArrayList<String> Commutateurs= new ArrayList<String>();
 		 
 		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(fichier));
-			
-			while((line = br.readLine()) != null) {		
-				
-				if(line.equals("Couloir") == true) {
-						line = br.readLine();
-						while(line.equals("end") == false) {
-							Couloirs.add(line);
-							line = br.readLine();
-
-						
-						}
+		try(BufferedReader br = new BufferedReader(new StringReader(fichier))) {
+			String line;
+			while((line = br.readLine()) != null) {
+				if(line.startsWith("Couloir")){
+					Couloirs.add(line);
 				}
-				
-				else if(line.equals("Trappe") == true) {
-					line = br.readLine();
-					while(line.equals("end") == false) {
-						Trappes.add(line);
-						line = br.readLine();
-					}
-					
+				else if(line.startsWith("Fantome")){
+					Fantomes.add(line);
 				}
-				else if(line.equals("Fantome") == true) {
-					line = br.readLine();
-					while(line.equals("end") == false) {
-						Fantomes.add(line);
-						line = br.readLine();
-					}
-					
+				else if(line.startsWith("Trappe")){
+					Trappes.add(line);
 				}
-				else if(line.equals("Commutateur") == true) {
-					line = br.readLine();
-					while(line.equals("end") == false) {
-						Commutateurs.add(line);
-						line = br.readLine();
-					}
-					
+				else if(line.startsWith("Commutateur")){
+					Commutateurs.add(line);
+				}
+				else if(line.startsWith("Fin")){
+					break;
 				}
 			}
-			 
-			 // PERMET DE LIRE TOUS LES ELEMENTS SEPAREMENT
-//			 for (int i = 0; i < Couloirs.size(); i++) {
-//				 System.out.println("Couloir " + i + " " + Couloirs.get(i));
-				 
-//		 }
-			 
-			 //////////////////////////////////////////////////////////
-			 
-			 
-			 // PERMET DE LIRE EGALEMENT EN SPLITANT LES ELEMENTS A LINTERIEUR AVEC LE "/"
-//			 String[]ligne = null;
-//			 int compteur = 0;
-//			 for (int i = 0; i < Couloirs.size(); i++) {
-//				 	compteur ++;
-//				 	System.out.println("======");
-//				 	ligne = Couloirs.get(i).split("/");	
-//					for (int j = 0; j < ligne.length; j++) {
-//			            System.out.println("L"+compteur + "=" + ligne[j]);
-//			           
-//			            
-//					}
-//					
-//				}
-			 
-			 br.close();
+			br.close();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -113,25 +53,6 @@ public class LireFichierTxt {
 		allElements.add(Trappes);
 		allElements.add(Fantomes);
 		allElements.add(Commutateurs);
-//		allElements[0] = Couloirs ;
-//		allElements[1] = Trappes ;
-//		allElements[2] = Fantomes ;
-//		allElements[3] = Commutateurs ;
-		System.out.println("SALUT" + allElements);
-		System.out.println("SALUT FDP0" + allElements.get(0));
-		System.out.println("SALUT FDP1" + allElements.get(1));
-		System.out.println("SALUT FDP2" + allElements.get(2));
-		System.out.println("SALUT FDP3" + allElements.get(3));
-		
-		return allElements;		
-}
-public static String readFileAsString(String fileName)throws Exception
-	  {
-	    String data = "";
-	    data = new String(Files.readAllBytes(Paths.get(fileName)));
-	    return data;
-}
-
-	
-
+		return allElements;
+	}
 }
