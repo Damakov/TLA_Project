@@ -1,5 +1,7 @@
 PROJET UNIVERSITAIRE LICENCE 3EME ANNÉE - THEORIE DES LANGAGES ET AUTOMATES - Professeur Mr.Bourreau
 
+~ Le jeu a été créé par Mr.Bourreau, notre projet étant de créer notre propre langage permettant de créer des niveaux de ce jeu ~
+
 Membres du groupe :
 Sean Fauvel
 Hreshvik Sewraj
