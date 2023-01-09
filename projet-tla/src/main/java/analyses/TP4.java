@@ -14,7 +14,7 @@ public class TP4 {
 
 	public static void main(String[] args) {
 		
-		String path = "src/main/ressources/level";
+		String path = "src/main/resources/level";
 		File folder = new File(path);
 			
 		File[] listOfFiles = folder.listFiles(new FilenameFilter() {
