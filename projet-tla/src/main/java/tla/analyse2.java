@@ -4,13 +4,13 @@ import java.util.Arrays;
 
 import static tla.Direction.*;
 
-class Niveau3 extends Niveau {
+class analyse2 extends Niveau {
 
-    Niveau3() {
+    analyse2() {
         INIT_CARREAUX =
 "####################"+
 "####################"+
-"####################"+
+"######## ###########"+
 "####################"+
 "####################"+
 "####################"+
