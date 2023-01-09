@@ -44,7 +44,7 @@ public class Main extends Application {
     	Scene scene = new Scene(menuPane);
         BorderPane borderPane = new BorderPane();
         Plateau plateau = new Plateau(borderPane);
-    
+        Button[]buttons=new Button[10];
         
     //Recuperation de tout les fichiers
 		String path = "src/main/resources/level";
@@ -93,22 +93,88 @@ public class Main extends Application {
 			ArrayList<ArrayList<String>>a=LireFichierTxt.lireFichier(testAnalyseSyntaxique(text));
 			//pour afficher les listes pour voir le résultat
 			//for(ArrayList<String> b:a) {for(String c:b) {System.out.println(c);}}
-			creationNiveau.creerNiveau(a,nom1);
+			creationNiveau.creerNiveau(a,"Niveau"+nbFichier);
 			
-			Button btnNiveau=new Button(nom1);
-			menuPane.add(btnNiveau, 0, nbFichier);
-			try {
-			btnNiveau.setOnAction(event -> {
+			buttons[nbFichier]=new Button(nom1);
+			menuPane.add(buttons[nbFichier], 0, nbFichier);
+			
+			
+		}
+		try {
+		buttons[1].setOnAction(event -> {
 	            scene.setRoot(borderPane);
 	            plateau.setNiveau(new Niveau1());
 	            plateau.start();
 	            primaryStage.sizeToScene();
-	        });
-		}catch(Exception e) {
-			
-		}
-			}
-		
+	    });
+		}catch(Exception e){};
+		try {
+		buttons[2].setOnAction(event -> {
+            scene.setRoot(borderPane);
+            plateau.setNiveau(new Niveau2());
+            plateau.start();
+            primaryStage.sizeToScene();
+            });
+		}catch(Exception e){};
+		try {
+		buttons[3].setOnAction(event -> {
+            scene.setRoot(borderPane);
+            plateau.setNiveau(new Niveau3());
+            plateau.start();
+            primaryStage.sizeToScene();
+            });
+		}catch(Exception e){};
+		try {
+		buttons[4].setOnAction(event -> {
+            scene.setRoot(borderPane);
+            plateau.setNiveau(new Niveau4());
+            plateau.start();
+            primaryStage.sizeToScene();
+            });
+		}catch(Exception e){};
+		try {
+		buttons[5].setOnAction(event -> {
+			scene.setRoot(borderPane);
+			plateau.setNiveau(new Niveau5());
+			plateau.start();
+			primaryStage.sizeToScene();
+        });}catch(Exception e){};
+		try {
+		buttons[6].setOnAction(event -> {
+			scene.setRoot(borderPane);
+			plateau.setNiveau(new Niveau6());
+			plateau.start();
+			primaryStage.sizeToScene();
+        });}catch(Exception e){};
+		try {
+		buttons[7].setOnAction(event -> {
+			scene.setRoot(borderPane);
+			plateau.setNiveau(new Niveau7());
+			plateau.start();
+        primaryStage.sizeToScene();
+		});}catch(Exception e){};
+		try {
+		buttons[8].setOnAction(event -> {
+			scene.setRoot(borderPane);
+			plateau.setNiveau(new Niveau8());
+			plateau.start();
+			primaryStage.sizeToScene();
+		});}catch(Exception e){};
+		try {
+		buttons[9].setOnAction(event -> {
+			scene.setRoot(borderPane);
+			plateau.setNiveau(new Niveau9());
+			plateau.start();
+			primaryStage.sizeToScene();
+		});}catch(Exception e){};
+		try {
+		buttons[10].setOnAction(event -> {
+			scene.setRoot(borderPane);
+			plateau.setNiveau(new Niveau10());
+			plateau.start();
+			primaryStage.sizeToScene();
+		});
+		}catch(Exception e){};
        
 		primaryStage.setScene(scene);
         primaryStage.show();

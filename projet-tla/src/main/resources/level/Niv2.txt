@@ -1,7 +1,7 @@
-c ligne /3/(8;9) colonne/5/(5;5) end
-Trappe entre(8;9) sortie (1;2) end
+c ligne /3/(8;9) end
+Trappe entre(8;9) /sortie (1;2) end
 Fantome spawn(8;9)/deplacement(gauche=2;droite=3) end
-Commutateur levier(2;10)porte(6;9)end
-Couloirs ligne /3/(8;9) colonne/5/(5;5) end
+Commutateur levier(2;10)/porte(6;9)end
+Couloirs ligne /3/(8;9)  end
 
 Fin

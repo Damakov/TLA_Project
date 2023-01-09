@@ -75,6 +75,7 @@ public class AnalyseLexicale {
 					switch(buf) {
 					case "Fin":
 					case "fin":
+					case "FIN":
 						tokens.add(new Token(TypeDeToken.Fin));
 						retourArriere();
 						break;

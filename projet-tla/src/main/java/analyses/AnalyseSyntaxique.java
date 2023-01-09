@@ -272,9 +272,20 @@ public class AnalyseSyntaxique {
 		if (getTypeDeToken() == TypeDeToken.rightPar){
 			printToken(")");
 			niveauIndentation++;
+			String c = T13();
+			niveauIndentation--;
+			return ")"+c;
+		}
+		throw new UnexpectedTokenException("Erreur de syntaxe dans Trappe.");
+	}
+	private String  T13() throws UnexpectedTokenException {
+		pos++;
+		if (getTypeDeToken() == TypeDeToken.slash){
+			printToken("/");
+			niveauIndentation++;
 			String c = T7();
 			niveauIndentation--;
-			return ")/"+c;
+			return "/"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Trappe.");
 	}
@@ -624,9 +635,20 @@ public class AnalyseSyntaxique {
 		if (getTypeDeToken() == TypeDeToken.rightPar){
 			printToken(")");
 			niveauIndentation++;
+			String c = K13();
+			niveauIndentation--;
+			return ")"+c;
+		}
+		throw new UnexpectedTokenException("Erreur de syntaxe dans Commutateur.");
+	}
+	private String K13() throws UnexpectedTokenException {
+		pos++;
+		if (getTypeDeToken() == TypeDeToken.slash){
+			printToken("/");
+			niveauIndentation++;
 			String c = K7();
 			niveauIndentation--;
-			return ")/"+c;
+			return "/"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Commutateur.");
 	}
