@@ -11,8 +11,7 @@ public class creationNiveau {
 	
 	          
 	
-	static String NouvelleMap(String str, int positionLigne, int enleverHashDebut, int enleverHashFin )
-	{
+	static String NouvelleMap(String str, int positionLigne, int enleverHashDebut, int enleverHashFin ){
 			
 		String returnMap = "";
 		String[] mapLigne = str.split("\n");
@@ -35,7 +34,7 @@ public class creationNiveau {
 		 
 		// Permet de remplacer # avec un ' ' de tel (debut) à tel endroit (fin)
 		StringBuilder strBuilder = new StringBuilder(str);
-		 for (int i = debut; i < fin; i++) {
+		 for (int i = debut+1; i < fin+1; i++) {
 			 if (
 			 strBuilder.charAt(i) == '*') {
 				 
@@ -56,7 +55,9 @@ public class creationNiveau {
 	
 
 	public static void creerNiveau(ArrayList<ArrayList<String>> list, String nom) throws IOException {
-		File file = new File("./"+nom+".java");
+		String[] a = nom.split("\\.");
+		String name=a[0];
+		File file = new File("./src/main/java/tla/"+name+".java");
 		// On créé un file avec le bon nom et l'extension Java si il n'existe pas et si il existe on le delete et le créé après
 		if (file.createNewFile()==false) {
 			file.delete();
@@ -71,25 +72,26 @@ public class creationNiveau {
 		 		+ "\n"
 		 		+ "import static tla.Direction.*;\n"
 		 		+ "\n"
-		 		+ "class Niveau1 extends Niveau {\n"
+		 		+ "class "+name+" extends Niveau {\n"
 		 		+ "\n"
-		 		+ "    "+nom+"() {\n"
+		 		+ "    "+name+"() {\n"
 		 		+ "        INIT_CARREAUX =\n");
 		 
-		 String map = "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "####################\n" +
-				 "###################*\n" ;
+		 String map = 
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"####################\"+\n" +
+				 "\"###################*\"\n" ;
 		 
 		 	int positionLigne;
 			int enleverHashDebut;
@@ -104,9 +106,9 @@ public class creationNiveau {
 
 		 			 }
 		 			 else {
-		 				 positionLigne = Integer.parseInt(couloirs[1]);
-		 				enleverHashDebut = Integer.parseInt(coord[0]);
-		 				enleverHashFin = Integer.parseInt(coord[1]);
+		 				 positionLigne = Integer.parseInt(couloirs[1].replaceAll("[^0-9]", ""));
+		 				enleverHashDebut = Integer.parseInt(coord[0].replaceAll("[^0-9]", ""));
+		 				enleverHashFin = Integer.parseInt(coord[1].replaceAll("[^0-9]", ""));
 
 		 				map = NouvelleMap(map, positionLigne, enleverHashDebut, enleverHashFin);
 
@@ -126,27 +128,22 @@ public class creationNiveau {
 		 
 		 
 		 bw.write("TRAPPES = Arrays.asList(\n");
-		 
+		 int nbtrappe=0;
 		 // Ici on fait les trappes
 		 for( String item : list.get(1)) {
-			int x;
-			int y;
-			int destx;
-			int desty;
-			 
-		           String[] words = item.split("/");
-		           
-		           String[] entree = words[0].split(";");
-		           x = Integer.parseInt(entree[0]);
-		           y = Integer.parseInt(entree[1]);
-		           
-		           String[] sortie = words[1].split(";");
-		           destx = Integer.parseInt(sortie[0]);
-		           desty = Integer.parseInt(sortie[1]);
-		            
-		            
-		        
-			 bw.write("new Trappe("+x+", "+y+", DROITE, "+destx+", "+desty+"),\n");
+			 if(nbtrappe!=0){
+					bw.write(",");
+			 }
+			 int x,y,destx,desty;
+			 String[] words = item.split("/");
+			 String[] entree = words[0].split(";");
+	         x = Integer.parseInt(entree[0].replaceAll("[^0-9]", ""));
+	         y = Integer.parseInt(entree[1].replaceAll("[^0-9]", ""));
+	         String[] sortie = words[1].split(";");
+	         destx = Integer.parseInt(sortie[0].replaceAll("[^0-9]", ""));
+	         desty = Integer.parseInt(sortie[1].replaceAll("[^0-9]", ""));
+	         nbtrappe++;
+			 bw.write("\nnew Trappe("+x+", "+y+", DROITE, "+destx+", "+desty+")");
 		 }
 		bw.write(");\n");
 		
@@ -154,66 +151,85 @@ public class creationNiveau {
 		
 		// On fait ensuite les fantomes
 		bw.write("fantomes = Arrays.asList(\n");
+		int nbfant=0;
 		for ( String item: list.get(2)) {
-			int x;
-			int y;
-			
-
+			if(nbfant!=0){
+				bw.write(",");
+			}
+			int x;int y;
 			 // Ici on prend juste les coordonnées du spawn du fantome
 			String[] words = item.split("/");
 			String[] coordFant = words[0].split(";");
-			
-			x = Integer.parseInt(coordFant[0]);
-			y = Integer.parseInt(coordFant[1]);
+			x = Integer.parseInt(coordFant[0].replaceAll("[^0-9]", ""));
+			y = Integer.parseInt(coordFant[1].replaceAll("[^0-9]", ""));
+			bw.write("\nnew Fantome("+x+","+y+", Arrays.asList(");
 			
 			// Avec la deuxieme partie on a les deplacements, mais il faut les separer
 			String deplacement = words[1];
 			
-			String[] deponly = words[1].split("(");
+			String[] deponly = words[1].split("\\(");
 			String[] deplacementsList = deponly[1].split(";");
 			
 			// Pour le deplacement on regarde découpe chaque partie avec ;
 			// Puis on regarde la premiere lettre de chaque partie pour savoir le mouvement
 			// Et on boucle sur le chiffre pour l'ajouter le nombre de fois necessaire
+			int nbdep=0;
 			for (String dep : deplacementsList) {
-				if (dep.matches("g.*")) {
-					int i = Integer.parseInt(dep);
+				if(nbdep!=0){
+					bw.write(",");
+				}
+				if (dep.startsWith("gauche")) {
+					int i = Integer.parseInt(dep.replaceAll("[^0-9]", ""));
+					int buf=0;
 					for (int j=0 ; j<i; j++ ) {
-						bw.write("GAUCHE, \n");
+						if(buf!=0){bw.write(",");}
+						bw.write("GAUCHE\n");
+						buf++;
 					}
-
-				};
-				if (dep.matches("d.*")) {
-					int i = Integer.parseInt(dep);
+				}else
+				if (dep.startsWith("droite")) {
+					int buf=0;
+					int i = Integer.parseInt(dep.replaceAll("[^0-9]", ""));
 					for (int j=0 ; j<i; j++ ) {
-						bw.write("DROITE, \n");
+						if(buf!=0){bw.write(",");}
+						bw.write("DROITE\n");
+						buf++;
 					}
-				};
-				if (dep.matches("h.*")) {
-					int i = Integer.parseInt(dep);
+				}else
+				if (dep.startsWith("haut")) {
+					int i = Integer.parseInt(dep.replaceAll("[^0-9]", ""));
+					int buf=0;
 					for (int j=0 ; j<i; j++ ) {
-						bw.write("HAUT, \n");
+						if(buf!=0){bw.write(",");}
+						bw.write("HAUT\n");
+						buf++;
 					}
-				};
-				if (dep.matches("b.*")) {
-					int i = Integer.parseInt(dep);
+				}else
+				if (dep.startsWith("bas")) {
+					int buf=0;
+					int i = Integer.parseInt(dep.replaceAll("[^0-9]", ""));
 					for (int j=0 ; j<i; j++ ) {
-						bw.write("BAS, \n");
+						if(buf!=0){bw.write(",");}
+						bw.write("BAS\n");
+						buf++;
 					}
-				};
-				
+				}
+				nbdep++;
 			}
-			
-			
+			nbfant++;
+			bw.write("))\n");
 		}
-		
+		bw.write(");\n");
 		
 		// On fait la meme chose avec les commutateurs
 		
 		
 		bw.write("commutateurs = Arrays.asList(\n");
-		
+		int nbcom=0;
 		for (String item : list.get(3)) {
+			if(nbcom!=0){
+				bw.write(",");
+			}
 			int Levierx;
 			int Leviery;
 			int Portex;
@@ -222,32 +238,23 @@ public class creationNiveau {
 			String[] coordLevier = words[0].split(";");
 			String[] coordPorte = words[1].split(";");
 
-			Levierx = Integer.parseInt(coordLevier[0]);
-			Leviery = Integer.parseInt(coordLevier[1]);
+			Levierx = Integer.parseInt(coordLevier[0].replaceAll("[^0-9]", ""));
+			Leviery = Integer.parseInt(coordLevier[1].replaceAll("[^0-9]", ""));
 			
 			// Je ne sais pas ou mettre les coords de la porte
-			Portex = Integer.parseInt(coordPorte[0]);
-			Portey = Integer.parseInt(coordPorte[1]);
+			Portex = Integer.parseInt(coordPorte[0].replaceAll("[^0-9]", ""));
+			Portey = Integer.parseInt(coordPorte[1].replaceAll("[^0-9]", ""));
 			
-			bw.write("new Commutateur("+Levierx+","+Leviery+")\n");
+			bw.write("\nnew Commutateur("+Levierx+","+Leviery+")");
 			
-			
+			nbcom++;
 		}
 		
-		bw.write(");\n } \n void hookApresDeplacement(Plateau plateau) { \n ");
-		
-		
-		
-		
-		
-		
-		
+		bw.write(");\n } \n void hookApresDeplacement(Plateau plateau) { };}\n ");
 		
 		bw.close();
 		
-		
 	}
-
 }
 
 

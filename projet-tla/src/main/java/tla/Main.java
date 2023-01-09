@@ -14,6 +14,7 @@ import analyses.Token;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -26,8 +27,15 @@ public class Main extends Application {
         launch(args);
     }
 
+    public String getClass(File file) {
+    	return removeExtension(file.getName());
+    }
+    public static String removeExtension(String file){
+    	  return file.replaceFirst("[.][^.]+$", "");
+    	}
+    
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
     	
     	GridPane menuPane = new GridPane();
     	ImageView imageView = new ImageView(LibrairieImages.imgJoueurGrand);
@@ -47,17 +55,26 @@ public class Main extends Application {
 				return name.endsWith(".txt");
 			}
 		});
+		if(listOfFiles.length<1) {
+			menuPane.add(new Label("Vous n'avez aucun fichier texte"),0,0);
+		}
 		//Le nom de tout les fichiers txt dans le repertoire
 		ArrayList<String> txtFiles=new ArrayList<>();
 		for(File file:listOfFiles) {
 			if(file.isFile()) {
 				txtFiles.add(file.getName());
 			}
+			String c=getClass(file);System.out.println(c);
 		}
 		
 		int nbFichier=0;
 		//Recupere en String le contenu du fichier et faire les analyses
 		for(String name:txtFiles) {
+			//nom du fichier sans .txt
+			String[] nom = name.split("\\.");
+			String nom1=nom[0];
+			//File file = new File("./src/main/java/tla/"+name+".java");
+			
 			nbFichier++;
 			System.out.println("\n\n\n\nFichier numero "+nbFichier+" au nom "+name);
 			StringBuilder sb = new StringBuilder();
@@ -75,21 +92,22 @@ public class Main extends Application {
 			//fait les analyses et envoit le resultat dans la lecture de fichier pour obtenir des Listes des éléments
 			ArrayList<ArrayList<String>>a=LireFichierTxt.lireFichier(testAnalyseSyntaxique(text));
 			//pour afficher les listes pour voir le résultat
-			/*for(ArrayList<String> b:a) {
-				for(String c:b) {
-					System.out.println(c);
-				}
-			}*/
-			Button btnNiveau=new Button(name);
-			menuPane.add(btnNiveau, 0, nbFichier);
+			//for(ArrayList<String> b:a) {for(String c:b) {System.out.println(c);}}
+			creationNiveau.creerNiveau(a,nom1);
 			
+			Button btnNiveau=new Button(nom1);
+			menuPane.add(btnNiveau, 0, nbFichier);
+			try {
 			btnNiveau.setOnAction(event -> {
 	            scene.setRoot(borderPane);
 	            plateau.setNiveau(new Niveau1());
 	            plateau.start();
 	            primaryStage.sizeToScene();
 	        });
+		}catch(Exception e) {
+			
 		}
+			}
 		
        
 		primaryStage.setScene(scene);
@@ -132,6 +150,7 @@ public class Main extends Application {
 			List<Token> tokens = new AnalyseLexicale().analyse(entree);
 			System.out.println("Pas d'erreur lors de l'analyse lexicale \n");
 			String res = new AnalyseSyntaxique().analyse(tokens);
+			//System.out.println(entree+"\n"+res);
 			//System.out.println(entree + "\n" + res);//pour voir la tranformation entre le texte de base et en token
 			System.out.println("Pas d'erreur lors de l'analyse syntaxique\n");
 			return res;

@@ -29,7 +29,7 @@ public class AnalyseSyntaxique {
 	private String S() throws UnexpectedTokenException {
 		if (getTypeDeToken() == TypeDeToken.Fin) {
 			printToken("Fin");
-			return "Fin ";
+			return "Fin \n";
 		}
 		if (getTypeDeToken() == TypeDeToken.Couloir){
 			niveauIndentation++;
@@ -37,7 +37,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = C1();
 			niveauIndentation--;
-			return "Couloir "+c;
+			return "Couloir \n"+c;
 		}
 		if (getTypeDeToken() == TypeDeToken.Trappe){
 			niveauIndentation++;
@@ -45,7 +45,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = T1();
 			niveauIndentation--;
-			return "Trappe "+c;
+			return "Trappe \n"+c;
 		}
 		if (getTypeDeToken() == TypeDeToken.Fantome){
 			niveauIndentation++;
@@ -53,7 +53,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = F1();
 			niveauIndentation--;
-			return "Fantome "+c;
+			return "Fantome \n"+c;
 		}
 		if (getTypeDeToken() == TypeDeToken.Commutateur){
 			niveauIndentation++;
@@ -61,7 +61,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = K1();
 			niveauIndentation--;
-			return "Commutateur "+c;
+			return "Commutateur \n"+c;
 		}
 		throw new UnexpectedTokenException("Vous avez oublié de finir par Fin ou de commencer par Couloir, Trappe, Fantome ou Commutateur.");	
 	}
@@ -97,12 +97,12 @@ public class AnalyseSyntaxique {
 	
 	private String  C2() throws UnexpectedTokenException {
 		pos++;
-		if (getTypeDeToken() == TypeDeToken.comma){
-			printToken(",");
+		if (getTypeDeToken() == TypeDeToken.slash){
+			printToken("/");
 			niveauIndentation++;
 			String c = C3();
 			niveauIndentation--;
-			return ", "+c;
+			return "/ "+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe, apres une ligne ou une colonne il devrait y avoir une virgule.");
 	}
@@ -122,12 +122,12 @@ public class AnalyseSyntaxique {
 	
 	private String  C4() throws UnexpectedTokenException {
 		pos++;
-		if (getTypeDeToken() == TypeDeToken.comma){
-			printToken(",");
+		if (getTypeDeToken() == TypeDeToken.slash){
+			printToken("/");
 			niveauIndentation++;
 			String c = C5();
 			niveauIndentation--;
-			return ", "+c;
+			return "/ "+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Couloir.");
 	}
@@ -189,7 +189,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = C1();
 			niveauIndentation--;
-			return ") "+c;
+			return ")\n"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Couloir.");
 	}
@@ -274,7 +274,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = T7();
 			niveauIndentation--;
-			return ") "+c;
+			return ")/"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Trappe.");
 	}
@@ -348,7 +348,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = T1();
 			niveauIndentation--;
-			return ") "+c;
+			return ")\n"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Trappe.");
 	}
@@ -438,12 +438,12 @@ public class AnalyseSyntaxique {
 	
 	private String F7() throws UnexpectedTokenException {
 		pos++;
-		if (getTypeDeToken() == TypeDeToken.comma){
-			printToken(",");
+		if (getTypeDeToken() == TypeDeToken.slash){
+			printToken("/");
 			niveauIndentation++;
 			String c = F8();
 			niveauIndentation--;
-			return ", "+c;
+			return "/ "+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Fantome.");
 	}
@@ -467,7 +467,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = F10();
 			niveauIndentation--;
-			return "( "+c;
+			return "("+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Fantome.");
 	}
@@ -537,14 +537,14 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = F10();
 			niveauIndentation--;
-			return "; "+c;
+			return ";"+c;
 		}
 		if (getTypeDeToken() == TypeDeToken.rightPar){
 			printToken(")");
 			niveauIndentation++;
 			String c = F1();
 			niveauIndentation--;
-			return ") "+c;
+			return ")\n"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Fantome.");
 	}
@@ -626,7 +626,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = K7();
 			niveauIndentation--;
-			return ") "+c;
+			return ")/"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Commutateur.");
 	}
@@ -700,7 +700,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation++;
 			String c = K1();
 			niveauIndentation--;
-			return ") "+c;
+			return ")\n"+c;
 		}
 		throw new UnexpectedTokenException("Erreur de syntaxe dans Commutateur.");
 	}

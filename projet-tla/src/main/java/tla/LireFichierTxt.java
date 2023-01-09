@@ -24,16 +24,19 @@ public class LireFichierTxt {
 		try(BufferedReader br = new BufferedReader(new StringReader(fichier))) {
 			String line;
 			while((line = br.readLine()) != null) {
-				if(line.startsWith("Couloir")){
+				if(line.startsWith("ligne")){
 					Couloirs.add(line);
 				}
-				else if(line.startsWith("Fantome")){
+				else if(line.startsWith("colonne")){
+					Couloirs.add(line);
+				}
+				else if(line.startsWith("spawn")){
 					Fantomes.add(line);
 				}
-				else if(line.startsWith("Trappe")){
+				else if(line.startsWith("entre")){
 					Trappes.add(line);
 				}
-				else if(line.startsWith("Commutateur")){
+				else if(line.startsWith("levier")){
 					Commutateurs.add(line);
 				}
 				else if(line.startsWith("Fin")){

@@ -24,7 +24,7 @@ public enum TypeDeToken {
     semiColon,
     comma,
     equal,
-    slash,//je sais pas si c'est possible dans notre grammaire donc peut etre enlever
+    slash,
     intVal,
     ident
 }
