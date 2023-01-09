@@ -18,7 +18,7 @@ Ce que nous n'avons pas fini :
 
 - Sortie du niveau pas réalisée (elle sera en bas a droite d'office)
 - Colonne ne fonctionne pas : seulement possible d'enlever des murs (des #) par LIGNE donc ligne/2/(5;10) soit à la ligne 2 on enlève du 5ème # compris au 10ème # compris pour mettre des vides.
-- Pas de sens exigé pour rentrer dans la trappe.
+- Pas de sens exigé pour rentrer dans la trappe, mais il faut aller à droite pour se téléporter.
 - Quand nous avions avancé au fur et à mesure, on s'est rendu compte que certaines choses pouvaient être plus optimisé et facile en les changeant.
 Par exemple, on a remplacé les "," par des "/" car pour l'exemple : [levier(5;14)/porte(1;3), levier(11;6)/porte(10;13)]
 c'est plus simple pour split avec des "/" chaque élément et les arrayLists séparent automatiquement par des "," entre chaque.
