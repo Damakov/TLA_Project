@@ -63,7 +63,7 @@ public class AnalyseSyntaxique {
 			niveauIndentation--;
 			return "Commutateur "+c;
 		}
-		throw new UnexpectedTokenException("Vous avez oublié de finir par Fin.");	
+		throw new UnexpectedTokenException("Vous avez oublié de finir par Fin ou de commencer par Couloir, Trappe, Fantome ou Commutateur.");	
 	}
 
 // -------------------------Couloir-----------------------------------

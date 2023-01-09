@@ -1,6 +1,16 @@
 package tla;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import analyses.AnalyseLexicale;
+import analyses.AnalyseSyntaxique;
+import analyses.Token;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,94 +29,72 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
     	
-    	// ça permet de lister les fichiers contenu dans le ressources level et ensuite on boucle sur ces fichiers là
-    	// le but c'est ensuite d'appliquer le lire fichier text sur tous les fichiers et de verifier que chaque tableau qui en sort est conforme avec l'anlyse lexical et syntaxique
+    	GridPane menuPane = new GridPane();
+    	ImageView imageView = new ImageView(LibrairieImages.imgJoueurGrand);
+    	menuPane.add(imageView, 1, 0, 1, 5);
     	
-    	File dir = new File("src/main/ressources/level");
-    	File[] liste = dir.listFiles();
-    	
-		GridPane menuPane = new GridPane();
+    	Scene scene = new Scene(menuPane);
+        BorderPane borderPane = new BorderPane();
+        Plateau plateau = new Plateau(borderPane);
+    
+        
+    //Recuperation de tout les fichiers
+		String path = "src/main/resources/level";
+		File folder = new File(path);
+			
+		File[] listOfFiles = folder.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".txt");
+			}
+		});
+		//Le nom de tout les fichiers txt dans le repertoire
+		ArrayList<String> txtFiles=new ArrayList<>();
+		for(File file:listOfFiles) {
+			if(file.isFile()) {
+				txtFiles.add(file.getName());
+			}
+		}
 		
-
-        Scene scene = new Scene(menuPane);
-        primaryStage.setScene(scene);
+		int nbFichier=0;
+		//Recupere en String le contenu du fichier et faire les analyses
+		for(String name:txtFiles) {
+			nbFichier++;
+			System.out.println("\n\n\n\nFichier numero "+nbFichier+" au nom "+name);
+			StringBuilder sb = new StringBuilder();
+			try (BufferedReader br = new BufferedReader(new FileReader(path+"/"+name))) {
+				String line;
+				while ((line = br.readLine()) != null) {
+					sb.append(line);
+			        sb.append(System.lineSeparator());
+			      }
+			    } catch (IOException e) {
+			      e.printStackTrace();
+			    }
+			String text = sb.toString();
+			
+			//fait les analyses et envoit le resultat dans la lecture de fichier pour obtenir des Listes des éléments
+			ArrayList<ArrayList<String>>a=LireFichierTxt.lireFichier(testAnalyseSyntaxique(text));
+			//pour afficher les listes pour voir le résultat
+			/*for(ArrayList<String> b:a) {
+				for(String c:b) {
+					System.out.println(c);
+				}
+			}*/
+			Button btnNiveau=new Button(name);
+			menuPane.add(btnNiveau, 0, nbFichier);
+			
+			btnNiveau.setOnAction(event -> {
+	            scene.setRoot(borderPane);
+	            plateau.setNiveau(new Niveau1());
+	            plateau.start();
+	            primaryStage.sizeToScene();
+	        });
+		}
+		
+       
+		primaryStage.setScene(scene);
         primaryStage.show();
 
-        // panneau racine du jeu
-
-        BorderPane borderPane = new BorderPane();
-
-        Plateau plateau = new Plateau(borderPane);
-        
-    	
-    	int i=0;
-    	for (File item : liste) {
-    		if (item.isFile()) {
-    			
-    			// ici on doit appeller la fonctions lire fichier text
-    			
-    			
-    			// puis les deux analyses 
-    			
-    			
-    			// ensuite on fait en sorte de reproduire l'interface avec le nom de chaque fichier exemple:
-    			
-
-    			// si tout est validé on appel la fonction creationNiveau pour faire le niveau lié au tableau creer dans lire fichier text
-    	        
-    			Button btnNiveau1 = new Button(item.getName());
-    	        menuPane.add(btnNiveau1, 0, i);
-    			// ça va peut etre etre un probleme avec le nom du button mais à voir plus tard pas le probleme maintenant
-    	        
-    	        btnNiveau1.setOnAction(event -> {
-    	            scene.setRoot(borderPane);
-    	            plateau.setNiveau(new Niveau1());
-    	            plateau.start();
-    	            primaryStage.sizeToScene();
-    	        });
-    		}
-    		i+=1;
-    	}
-
-        // fenêtre principale et panneau de menu
-
-        Button btnNiveau1 = new Button("niveau 1");
-        menuPane.add(btnNiveau1, 0, 1);
-        Button btnNiveau2 = new Button("niveau 2");
-        menuPane.add(btnNiveau2, 0, 2);
-        Button btnNiveau3 = new Button("niveau 3");
-        menuPane.add(btnNiveau3, 0, 3);
-        ImageView imageView = new ImageView(LibrairieImages.imgJoueurGrand);
-        menuPane.add(imageView, 1, 0, 1, 5);
-
-
-        btnNiveau1.setOnAction(event -> {
-            // affiche le panneau racine du jeu (à la place du panneau de menu)
-            scene.setRoot(borderPane);
-
-            // affecte un object correspondant au niveau choisi
-            plateau.setNiveau(new Niveau1());
-
-            // démarre le jeu
-            plateau.start();
-
-            // ajuste la taille de la fenêtre
-            primaryStage.sizeToScene();
-        });
-
-        btnNiveau2.setOnAction(event -> {
-            scene.setRoot(borderPane);
-            plateau.setNiveau(new Niveau2());
-            plateau.start();
-            primaryStage.sizeToScene();
-        });
-
-        btnNiveau3.setOnAction(event -> {
-            scene.setRoot(borderPane);
-            plateau.setNiveau(new Niveau3());
-            plateau.start();
-            primaryStage.sizeToScene();
-        });
 
         // gestion du clavier
 
@@ -136,4 +124,20 @@ public class Main extends Application {
             }
         });
     }
+    
+    
+    public static String testAnalyseSyntaxique(String entree) {
+		System.out.println("Test analyse syntaxique qui comprend l'analyse lexicale: \n");
+		try {
+			List<Token> tokens = new AnalyseLexicale().analyse(entree);
+			System.out.println("Pas d'erreur lors de l'analyse lexicale \n");
+			String res = new AnalyseSyntaxique().analyse(tokens);
+			//System.out.println(entree + "\n" + res);//pour voir la tranformation entre le texte de base et en token
+			System.out.println("Pas d'erreur lors de l'analyse syntaxique\n");
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace(System.out);
+		}
+		return null;
+	}
 }
