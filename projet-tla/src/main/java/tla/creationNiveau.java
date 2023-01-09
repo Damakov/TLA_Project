@@ -10,24 +10,26 @@ import java.util.Arrays;
 public class creationNiveau {
 	
 	          
-	
+	// Fonction permettant de reprendre la même map et enlever les # en fonction des paramètres
 	static String NouvelleMap(String str, int positionLigne, int enleverHashDebut, int enleverHashFin )
 	{
 			
 		String returnMap = "";
+		// Permet de séparer chaque ligne pour pouvoir ensuite les modifier une par une dans le for 
 		String[] mapLigne = str.split("\n");
 		int compteur = 0;
+		// Boucle permettant de lire ligne par ligne (les 14 lignes de 20 #)
         for (String mapXligneFinale : mapLigne) {
             compteur ++;
+		// modification SI la ligne (compteur) correspond à la ligne entrée en paramètre
             if(compteur == positionLigne) {
+		    // si oui, alors on appelle la fonction changerLigne qui permettera de transformer les # en espace en fonction des paramètres
+		    // (enleverHashDebut et enleverHashFin)
             	mapXligneFinale = changerLigne(mapXligneFinale,enleverHashDebut,enleverHashFin);
             }
             //System.out.println(mapXligneFinale);
             returnMap += mapXligneFinale + "\n";
         }
-        System.out.println("Nombre de lignes : " + compteur);
-        //System.out.println("CE QUE LA FONCTION RETOURNE :");
-
 		
 	   return returnMap;
 	}
@@ -38,9 +40,10 @@ public class creationNiveau {
 		 for (int i = debut; i < fin; i++) {
 			 if (
 			 strBuilder.charAt(i) == '*') {
-				 
+				// on fait rien étant donné que * représente la fin en bas à gauche 
 			 }
-			 else {
+			 else {		
+				 // on remplace le character situé à i, par un vide
 				 strBuilder.setCharAt(i, ' ');
 			 }
 		 }
@@ -49,10 +52,6 @@ public class creationNiveau {
       }  
 	
 
-	
-	
-	
-	
 	
 
 	public static void creerNiveau(ArrayList<ArrayList<String>> list, String nom) throws IOException {
